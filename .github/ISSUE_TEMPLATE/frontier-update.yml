@@ -1,0 +1,46 @@
+name: Frontier update
+description: Report a new result that changes an open node in 12-open-frontier.
+title: "[Frontier] "
+labels: ["frontier-update"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Open nodes carry an `as_of` date. Use this form when new work changes what an open node should say, or when it settles the question.
+
+  - type: input
+    id: open-node
+    attributes:
+      label: Which open node
+      description: The file path or title of the open node, for example nodes/12-open-frontier/....
+      placeholder: nodes/12-open-frontier/predictive-synthesis.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: change
+    attributes:
+      label: What changed and when
+      description: State the new result in one or two sentences and give the date it was announced or published.
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Source for the new result
+      description: Full citation preferred - peer-reviewed paper or collaboration paper. Press releases are acceptable only alongside the paper they describe.
+      placeholder: Author list (Collaboration) (2025). Title. Journal, volume, pages. arXiv:XXXX.XXXXX. doi:...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: settled
+    attributes:
+      label: Does this settle the question?
+      options:
+        - No, it updates the status
+        - Yes, the question is settled
+        - Not sure
+    validations:
+      required: true

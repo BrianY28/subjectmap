@@ -1,0 +1,52 @@
+name: Node correction
+description: Report a factual error, a wrong or missing source, or an unclear note in an existing node.
+title: "[Correction] "
+labels: ["node-correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to correct an existing node. Please give a full citation for the source you used, not just a link.
+
+  - type: input
+    id: node
+    attributes:
+      label: Node file path or title
+      description: The path of the Markdown file, or the node title if you are not sure of the path.
+      placeholder: nodes/03-thermodynamics-equilibrium/entropy-and-free-energy.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong
+      description: Quote the line, front matter field, or concept entry that is incorrect, and say why.
+      placeholder: The `when` value is given as 1850, but the paper was published in 1865.
+    validations:
+      required: true
+
+  - type: textarea
+    id: correction
+    attributes:
+      label: Suggested correction
+      description: Give the replacement text for the note, the corrected front matter value, or the corrected Concepts line.
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Source that supports the correction
+      description: Full citation - authors, title, journal or publisher, year, and DOI or stable URL. Page or section if relevant.
+      placeholder: Flowers et al. (2019). Chemistry 2e, section 16.4 Free Energy. OpenStax. https://openstax.org/books/chemistry-2e/pages/16-4-free-energy
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I checked the source myself
+          required: true

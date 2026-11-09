@@ -1,0 +1,85 @@
+name: New node
+description: Propose a new node for the map, with a draft note, concepts, and sources.
+title: "[New node] "
+labels: ["new-node"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A node is one topic, one Markdown file. Keep it narrow: if you can split it into two nodes without losing anything, it is probably two nodes.
+
+  - type: input
+    id: proposed-title
+    attributes:
+      label: Proposed title
+      description: Seven words at most. This becomes the `# Title` line and the file name.
+      placeholder: Chemical equilibrium
+    validations:
+      required: true
+
+  - type: dropdown
+    id: branch
+    attributes:
+      label: Branch
+      description: The folder the node belongs in.
+      options:
+        - 01-foundations-atoms
+        - 02-bonding-structure
+        - 03-thermodynamics-equilibrium
+        - 04-kinetics-catalysis
+        - 05-inorganic-chemistry
+        - 06-organic-chemistry
+        - 07-analytical-chemistry
+        - 08-electrochemistry-interfaces
+        - 09-biochemistry-chemical-biology
+        - 10-polymers-materials
+        - 11-environmental-green-chemistry
+        - 12-open-frontier
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it belongs in the map
+      description: What this node connects to, and why the map is incomplete without it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: draft-note
+    attributes:
+      label: Draft note
+      description: One or two sentences, plain language, saying what the idea is and why it mattered.
+      placeholder: Relates the equilibrium composition of a reversible reaction to the activities of reactants and products.
+    validations:
+      required: false
+
+  - type: textarea
+    id: concepts
+    attributes:
+      label: Concepts
+      description: Two to five lines, one concept per line. These become the `## Concepts` list.
+      placeholder: |-
+        Dynamic equilibrium
+        Mass action
+        Reaction quotient and direction
+        Equilibrium versus reaction rate
+    validations:
+      required: false
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Full citations - authors, title, journal or publisher, year, and DOI or stable URL. At least one.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched the map and this topic is not already covered
+          required: true

@@ -1,0 +1,88 @@
+<style>
+:root{--bg:#f6f7f2;--panel:#fff;--ink:#193b3d;--muted:#566c69;--line:#dce4dc;--a:#08776f;--b:#a56412;--wash:#edf3eb;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#102423;--panel:#162e2c;--ink:#e2eee6;--muted:#a8bfb5;--line:#31504a;--a:#88d9c9;--b:#edbd72;--wash:#1e3732;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,sans-serif}main{max-width:900px;margin:auto;padding:28px 24px 60px}a{color:var(--a);text-underline-offset:4px}nav{display:flex;flex-wrap:wrap;gap:20px;font-size:13px}.eyebrow{color:var(--b);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-top:36px}h1{font:500 clamp(32px,5vw,52px)/1.15 Georgia,serif;letter-spacing:-.025em;margin:12px 0 20px}h2{font-size:20px}p{max-width:720px}.lead{color:var(--muted);font-size:18px}.lab{border:1px solid var(--line);border-radius:12px;padding:26px;background:var(--panel);margin:28px 0}.equation{font:32px Georgia,serif;text-align:center;margin:0 0 6px}.equation .a{color:var(--a)}.equation .b{color:var(--b)}.model{font-size:12px;color:var(--muted);text-align:center;margin:0 auto 28px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:28px}label{display:flex;justify-content:space-between;font-size:14px;font-weight:600;gap:10px}input[type=range]{width:100%;accent-color:var(--a);margin:18px 0}.hint{font-size:12px;color:var(--muted);margin:0}button{font:inherit;cursor:pointer;border:1px solid var(--a);border-radius:6px;padding:10px 15px;color:var(--panel);background:var(--a)}button.secondary{background:transparent;color:var(--a)}button:disabled{opacity:.6;cursor:default}.buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}:focus-visible{outline:3px solid var(--b);outline-offset:4px}.composition{height:46px;display:flex;border-radius:6px;overflow:hidden;margin-top:26px}.part-a{background:var(--a)}.part-b{background:var(--b)}.legend{display:flex;justify-content:space-between;font-size:13px;margin:8px 0 20px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-top:1px solid var(--line);padding-top:18px}.metric span{display:block;color:var(--muted);font-size:12px}.metric output{font-size:21px;font-variant-numeric:tabular-nums}.result{padding:14px 18px;background:var(--wash);border-radius:6px;font-size:14px;min-height:75px}.fine{font-size:13px;color:var(--muted)}details{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;margin:28px 0}summary{cursor:pointer;font-weight:600}li{margin:10px 0}.sources{font-size:13px;overflow-wrap:anywhere}footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:20px;margin-top:36px}
+@media(max-width:550px){main{padding:20px 18px 40px}.lab{padding:20px 16px}.controls{grid-template-columns:1fr;gap:16px}.metrics{gap:8px}.metric output{font-size:18px}.lead{font-size:16px}.result{min-height:95px}}
+</style>
+<main>
+<nav aria-label="Breadcrumb"><a href="../../index.html">← Chemistry Map</a><a href="../../nodes/chemical-equilibrium.html">Read the topic</a></nav>
+<div class="eyebrow">An interactive concept · Thermodynamics</div>
+<h1>Equilibrium is a balance<br>of rates.</h1>
+<p class="lead">A reversible reaction keeps happening in both directions. At equilibrium, the two rates match and the mixture stops changing overall.</p>
+<section class="lab" aria-label="Ideal reversible reaction model">
+<p class="equation"><span class="a">A</span> ⇌ <span class="b">B</span></p>
+<p class="model">Closed ideal mixture · 298.15 K · fixed total concentration</p>
+<div class="controls">
+<div><label for="log-k">Equilibrium constant K <output id="k-label" for="log-k">4.00</output></label><input id="log-k" type="range" min="-2" max="2" step="0.01" value="0.60"><p class="hint">K &gt; 1 favors B. Each K setting represents a different model reaction at the same temperature.</p></div>
+<div><label for="initial-b">Starting fraction of B <output id="initial-label" for="initial-b">20%</output></label><input id="initial-b" type="range" min="1" max="99" step="1" value="20"><p class="hint">Choose a starting mixture. For a given K, either side approaches the same equilibrium.</p></div>
+</div>
+<div class="buttons"><button id="run" type="button">Relax toward equilibrium</button><button id="reset" class="secondary" type="button">Reset mixture</button></div>
+<div class="composition" role="img" id="composition" aria-label="Mixture: 80 percent A, 20 percent B"><div class="part-a" id="part-a" style="width:80%"></div><div class="part-b" id="part-b" style="width:20%"></div></div>
+<div class="legend"><span id="amount-a">A · 80.0%</span><span id="amount-b">B · 20.0%</span></div>
+<div class="metrics"><div class="metric"><span>Current Q = [B]/[A]</span><output id="q">0.250</output></div><div class="metric"><span>Equilibrium B</span><output id="equilibrium-b">79.9%</output></div><div class="metric"><span>ΔᵣG / kJ mol⁻¹</span><output id="free-energy">−6.86</output></div></div>
+<p class="result" id="direction" role="status">Q is below K. The net reaction proceeds toward B.</p>
+<p class="fine">Changing either slider resets the mixture. The animation uses an illustrative first-order model with an arbitrary timescale; K alone does not tell you how fast a real reaction occurs.</p>
+</section>
+<noscript><p>The controls need JavaScript. For this model, equilibrium occurs at x<sub>B</sub> = K/(1 + K). If K = 4, the equilibrium mixture is 80% B, regardless of its starting composition.</p></noscript>
+<h2>Try starting on the other side</h2>
+<p>Leave K near 4 and change the starting B fraction to 95%. Now the net reaction makes A. The final mixture still contains about 80% B. Equilibrium does not mean equal amounts.</p>
+<details><summary>The model and its limits</summary><p>For the ideal one-to-one conversion A ⇌ B, Q = a<sub>B</sub>/a<sub>A</sub> = [B]/[A]. At equilibrium Q = K, so the B fraction is K/(1 + K).</p><p>At fixed temperature and pressure, the reaction Gibbs energy is ΔᵣG = RT ln(Q/K), with R = 8.314462618 J mol⁻¹ K⁻¹. Its sign indicates the favored net direction. It does not measure an activation barrier.</p><p>The animation solves x<sub>B</sub>(t) = x<sub>B,eq</sub> + (x<sub>B,0</sub> − x<sub>B,eq</sub>)e<sup>−t</sup>. We choose forward and reverse rate constants with ratio K and sum 1 in arbitrary units. At equilibrium both rates remain nonzero. Activities and stoichiometric powers are needed for more general reactions.</p></details>
+<h2>Sources</h2>
+<ul class="sources"><li>Flowers et al. (2019), <a href="https://openstax.org/books/chemistry-2e/pages/13-2-equilibrium-constants">Chemistry 2e, §13.2: Equilibrium Constants</a>, OpenStax.</li><li>Flowers et al. (2019), <a href="https://openstax.org/books/chemistry-2e/pages/16-4-free-energy">Chemistry 2e, §16.4: Free Energy</a>, OpenStax.</li></ul>
+<footer>AI-assisted educational draft · Human chemistry review welcome · Content CC BY-SA 4.0 · Code MIT</footer>
+</main>
+<script>
+(() => {
+  const get = id => document.getElementById(id);
+  const kSlider = get('log-k'), mixture = get('initial-b'), run = get('run');
+  let frame = null, fraction = Number(mixture.value) / 100;
+  const constant = () => 10 ** Number(kSlider.value);
+  const target = () => constant() / (1 + constant());
+  const fmt = value => value.toFixed(3);
+  function draw() {
+    const K = constant(), Q = fraction / (1 - fraction);
+    const percent = fraction * 100;
+    get('k-label').textContent = K.toFixed(2);
+    get('initial-label').textContent = mixture.value + '%';
+    get('part-a').style.width = (100 - percent) + '%';
+    get('part-b').style.width = percent + '%';
+    get('amount-a').textContent = 'A · ' + (100 - percent).toFixed(1) + '%';
+    get('amount-b').textContent = 'B · ' + percent.toFixed(1) + '%';
+    get('composition').setAttribute('aria-label', `Mixture: ${(100-percent).toFixed(1)} percent A, ${percent.toFixed(1)} percent B`);
+    get('q').textContent = fmt(Q);
+    get('equilibrium-b').textContent = (target() * 100).toFixed(1) + '%';
+    const delta = 8.314462618 * 298.15 * Math.log(Q / K) / 1000;
+    get('free-energy').textContent = (Math.abs(delta) < .005 ? 0 : delta).toFixed(2);
+    const direction = Math.abs(Math.log(Q / K)) < 0.0001
+      ? 'Q equals K within display precision. Forward and reverse rates match; both reactions continue.'
+      : Q < K ? 'Q is below K. The net reaction proceeds toward B.' : 'Q is above K. The net reaction proceeds toward A.';
+    if (get('direction').textContent !== direction) get('direction').textContent = direction;
+  }
+  function stop() {
+    if (frame !== null) cancelAnimationFrame(frame);
+    frame = null;
+    run.disabled = false;
+    run.textContent = 'Relax toward equilibrium';
+  }
+  function reset() { stop(); fraction = Number(mixture.value) / 100; draw(); }
+  function relax() {
+    stop();
+    const start = fraction, equilibrium = target(), began = performance.now();
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { fraction = equilibrium; draw(); return; }
+    run.disabled = true;
+    run.textContent = 'Approaching equilibrium…';
+    function tick(now) {
+      const t = (now - began) / 650;
+      fraction = equilibrium + (start - equilibrium) * Math.exp(-t);
+      if (t >= 9) { fraction = equilibrium; stop(); draw(); return; }
+      draw(); frame = requestAnimationFrame(tick);
+    }
+    frame = requestAnimationFrame(tick);
+  }
+  kSlider.addEventListener('input', reset);
+  mixture.addEventListener('input', reset);
+  run.addEventListener('click', relax);
+  get('reset').addEventListener('click', reset);
+  draw();
+})();
+</script>

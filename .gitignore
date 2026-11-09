@@ -1,0 +1,8 @@
+# generated website (GitHub Actions builds and publishes it)
+site/
+# raw model reasoning logs: large and not useful to readers
+provenance/**/thinking/
+provenance/**/*.thinking.txt
+provenance/**/*.raw.txt
+__pycache__/
+.DS_Store
