@@ -16,7 +16,7 @@ Citation entries can refer to the same source. Branches organize each subject; d
 
 The interactive site opens with a subject selector. Each subject has a zoomable map, a searchable topic index, readable topic pages with sources, and an explainer: Newton's first law for physics and chemical equilibrium for chemistry.
 
-This checkout has not been published as `BrianY28/subjectmap`. Its GitHub and Pages links target that intended destination and become available after publication.
+Browse the [interactive maps](https://briany28.github.io/subjectmap/) or the [source repository](https://github.com/BrianY28/subjectmap).
 
 ## Build and preview
 
@@ -52,18 +52,11 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md). Useful contributions include correcting
 
 Both collections await human subject review. Imported physics topics retain their original DeepSeek drafting and Claude AI review records; chemistry topics retain their Codex drafting records and empty reviewer fields. Moving them into SubjectMap does not constitute a new scientific review. See the [physics provenance](subjects/physics/provenance/README.md) and [chemistry provenance](subjects/chemistry/provenance/README.md) for the creation records and checking limits.
 
-## First push and GitHub Pages
+## GitHub Pages
 
-The intended remote is `https://github.com/BrianY28/subjectmap.git`. With GitHub CLI authenticated and `origin` configured to that address, create the empty public repository and push:
+Push changes to `main` to run validation and publish the maps at **https://briany28.github.io/subjectmap/**. The **Publish maps** workflow checks both subjects and runs the tests before deploying.
 
-```bash
-gh repo create BrianY28/subjectmap --public --description "Open, sourced maps of physics and chemistry."
-git push -u origin main
-```
-
-If the repository already exists, skip its creation. In **Settings → Pages**, select **GitHub Actions** as the publishing source, then run **Publish maps** or push a change to `main`.
-
-The expected site address after successful deployment is `https://briany28.github.io/subjectmap/`. To use another destination, update `repository` and `site_url` in [subjects.json](subjects.json), update the issue-form links, and rebuild.
+For a fork, select **GitHub Actions** in **Settings → Pages**. Update `repository` and `site_url` in [subjects.json](subjects.json), update the issue-form links, rebuild, and run **Publish maps**.
 
 ## License and lineage
 

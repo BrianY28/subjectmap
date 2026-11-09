@@ -182,7 +182,7 @@ def opml(subject, config):
             for concept in node["concepts"]:
                 note = concept["note"]
                 if "explainer" in concept:
-                    note += "\nExplainer (after publication): " + explainer_url(subject, concept, config)
+                    note += "\nExplainer: " + explainer_url(subject, concept, config)
                 lines.append(f"          <outline text={quoteattr(concept['title'])} _note={quoteattr(note)}/>")
             lines.append("        </outline>")
         lines.append("      </outline>")
@@ -279,7 +279,7 @@ def topic_page(subject, branch, node, config, subjects):
 <h2>Sources</h2><ol class="sources">{sources}</ol>
 <aside class="review" aria-label="Review status"><p><strong>Drafted by:</strong> {esc(node.get('drafted_by', 'Not recorded'))}</p>
 <p><strong>Reviewed by:</strong> {esc(reviewers)}</p><p>Help improve this topic by checking a claim against its source.</p></aside>
-<p class="source-link"><a href="{esc(source)}">View or edit the source on GitHub</a> · Available after repository publication</p>
+<p class="source-link"><a href="{esc(source)}">View or edit the source on GitHub</a></p>
 <footer class="footer"><span>{esc(config['title'])} · Content CC BY-SA 4.0</span><a href="../index.html">Back to the map</a></footer></main></body></html>
 '''
 

@@ -20,7 +20,7 @@ python3 tools/build.py
 python3 -m http.server 8000 --directory site --bind 127.0.0.1
 ```
 
-Open **http://127.0.0.1:8000/chemistry/**. The equilibrium explainer is available at `/chemistry/explainers/equilibrium/`. The intended hosted route is `/subjectmap/chemistry/` after publication.
+Open **http://127.0.0.1:8000/chemistry/** or the [hosted chemistry map](https://briany28.github.io/subjectmap/chemistry/). The equilibrium explainer is available at `/chemistry/explainers/equilibrium/` within the local site.
 
 ## Review and contributions
 

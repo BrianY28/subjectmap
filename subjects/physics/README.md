@@ -20,7 +20,7 @@ python3 tools/build.py
 python3 -m http.server 8000 --directory site --bind 127.0.0.1
 ```
 
-Open **http://127.0.0.1:8000/physics/**. The site links each topic to its explanation and sources. The intended hosted route is `/subjectmap/physics/` after publication.
+Open **http://127.0.0.1:8000/physics/** or the [hosted physics map](https://briany28.github.io/subjectmap/physics/). The site links each topic to its explanation and sources.
 
 ## Review and contributions
 

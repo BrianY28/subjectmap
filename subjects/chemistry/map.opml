@@ -94,7 +94,7 @@
         </outline>
         <outline text="Chemical equilibrium" _note="1800s-present&#10;At equilibrium, opposing reaction rates balance and macroscopic composition remains constant under fixed conditions. Equilibrium composition need not contain equal amounts of reactants and products.&#10;Sources:&#10;- Flowers, P., Theopold, K., Langley, R., and Robinson, W. R. (2019). Chemistry 2e. OpenStax, 13.1 Chemical equilibria. https://openstax.org/books/chemistry-2e/pages/13-1-chemical-equilibria&#10;- Flowers, P., Theopold, K., Langley, R., and Robinson, W. R. (2019). Chemistry 2e. OpenStax, 13.2 Equilibrium constants. https://openstax.org/books/chemistry-2e/pages/13-2-equilibrium-constants">
           <outline text="Dynamic balance" _note="Microscopic forward and reverse reactions continue even when there is no net macroscopic reaction."/>
-          <outline text="Mass action" _note="For a specified reaction and standard states, the dimensionless activity quotient Q equals K at equilibrium.&#10;Explainer (after publication): https://briany28.github.io/subjectmap/chemistry/explainers/equilibrium/"/>
+          <outline text="Mass action" _note="For a specified reaction and standard states, the dimensionless activity quotient Q equals K at equilibrium.&#10;Explainer: https://briany28.github.io/subjectmap/chemistry/explainers/equilibrium/"/>
           <outline text="Reaction direction" _note="At a given temperature, Q below K favors the forward direction and Q above K favors the reverse direction under the usual closed-system constraints."/>
           <outline text="Changing conditions" _note="Temperature changes K, while adding material at fixed temperature changes Q and can shift the equilibrium composition."/>
         </outline>

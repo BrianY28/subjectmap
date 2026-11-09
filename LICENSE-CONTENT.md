@@ -10,7 +10,7 @@ This covers the Markdown topic files and branch descriptions in `subjects/*/node
 
 - **Physics:** Credit **Physics Map contributors** and link to [the original Physics Map](https://github.com/BrianY28/physics-map). SubjectMap imported the collection at commit `361e305e8870a917193a0059af3aa1b1b665fef1`. The migration changes its location, navigation and generated presentation; original topic authorship and review records are preserved. See [physics provenance](subjects/physics/provenance/README.md).
 - **Chemistry:** Credit **Chemistry Map contributors** and identify this SubjectMap collection. Chemistry topic content and its equilibrium explainer were newly drafted for the chemistry project before it became a subject here. See [chemistry provenance](subjects/chemistry/provenance/README.md).
-- **Shared documentation and subsequent contributions:** Credit **SubjectMap contributors** and link to the project at `https://github.com/BrianY28/subjectmap` once published.
+- **Shared documentation and subsequent contributions:** Credit **SubjectMap contributors** and link to the project at `https://github.com/BrianY28/subjectmap`.
 
 When sharing or adapting the content, retain the applicable attribution, indicate your changes, and distribute adaptations under the same license. A citation does not relicense the referenced publication or its assets. Historical material that is in the public domain remains in the public domain.
 
