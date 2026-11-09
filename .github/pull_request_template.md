@@ -1,6 +1,6 @@
 ## Summary
 
-What does this pull request change, and why?
+Which subject and topic does this pull request change, and why?
 
 ## Checklist
 

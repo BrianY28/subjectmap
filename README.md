@@ -1,42 +1,26 @@
-# Chemistry Map
+# SubjectMap
 
-An open map of chemistry, from atoms and bonding to the research frontier. Each topic lives in a small, sourced Markdown file that can be corrected or extended through a pull request.
+Open, sourced maps of physics and chemistry. Each subject has its own topic tree, interactive map and OPML export, with shared tools and a common contribution format.
 
-This is a chemistry counterpart to [Physics Map](https://github.com/BrianY28/physics-map), with the same plain-text approach, Python build, OPML export and GitHub Pages workflow.
+A topic is one short Markdown file. Readers can follow its concepts, inspect its sources, and propose a correction through a pull request.
 
-## Explore
+## Explore the subjects
 
-- [INDEX.md](INDEX.md): browse all topics and their concepts on GitHub.
-- [map.opml](map.opml): import the map into MindNode, XMind or another OPML outliner.
-- Interactive site: build locally using the commands below. The map supports zooming and topic browsing; each topic opens a readable page with sources.
-- [Chemical equilibrium explainer](explainers/equilibrium/index.html): an interactive model of a reversible reaction, included in the generated site.
+| Subject | Branches | Topics | Concepts | Citation entries | Browse | Export |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| [Physics](subjects/physics/README.md) | 11 | 82 | 326 | 228 | [Index](subjects/physics/INDEX.md) | [OPML](subjects/physics/map.opml) |
+| [Chemistry](subjects/chemistry/README.md) | 12 | 72 | 288 | 137 | [Index](subjects/chemistry/INDEX.md) | [OPML](subjects/chemistry/map.opml) |
+| **Total** | **23** | **154** | **614** | **365** | [Subject index](INDEX.md) | |
 
-This checkout has not been published. The GitHub links in the generated site target the intended repository, `BrianY28/chemistry-map`; they become available after that repository is created and populated.
+Citation entries can refer to the same source. Branches organize each subject; dates provide historical context and do not establish sole discovery or priority.
 
-## Scope
+The interactive site opens with a subject selector. Each subject has a zoomable map, a searchable topic index, readable topic pages with sources, and an explainer: Newton's first law for physics and chemical equilibrium for chemistry.
 
-The initial edition contains **12 branches, 72 topics and 288 concepts**. Branches form a learning path rather than a single historical timeline. Topic dates provide broad historical context, not claims of sole discovery or priority.
-
-| Branch | Topics |
-| --- | ---: |
-| Foundations and atoms | 6 |
-| Bonding and molecular structure | 6 |
-| Thermodynamics and equilibrium | 6 |
-| Kinetics and catalysis | 6 |
-| Inorganic chemistry | 6 |
-| Organic chemistry | 6 |
-| Analytical chemistry | 6 |
-| Electrochemistry and interfaces | 6 |
-| Biochemistry and chemical biology | 6 |
-| Polymers and materials | 6 |
-| Environmental and green chemistry | 6 |
-| Open frontier | 6 |
-
-Start with foundations, bonding and thermodynamics. Then follow a branch of interest. The frontier distinguishes demonstrated methods from remaining questions about reliability, scope, sustainability and scale.
+This checkout has not been published as `BrianY28/subjectmap`. Its GitHub and Pages links target that intended destination and become available after publication.
 
 ## Build and preview
 
-Python 3.9 or newer is the only build dependency.
+Run these commands from the repository root. Python 3.9 or newer is the only build dependency.
 
 ```bash
 python3 tools/build.py
@@ -45,26 +29,44 @@ python3 -m unittest discover -s tools -p 'test_*.py'
 python3 -m http.server 8000 --directory site --bind 127.0.0.1
 ```
 
-Open **http://127.0.0.1:8000/**. Stop the server with Ctrl+C.
+Open **http://127.0.0.1:8000/** and choose a subject. Direct local routes are `/physics/` and `/chemistry/`. Stop the server with Ctrl+C.
 
-For the optional numerical checks of the explainer, run `node tools/test_equilibrium.cjs` with Node.js installed. These checks also run in CI; Node.js is not needed to build or serve the site.
+The build validates both subjects and generates the root `INDEX.md`, each subject's `INDEX.md` and `map.opml`, and `site/`. Commit the generated Markdown indexes and OPML files with content changes; `site/` is rebuilt and remains ignored. The `--check` command validates all subjects and fails if any tracked generated output is stale.
 
-The build validates the node files and generates `INDEX.md`, `map.opml` and `site/`. Commit the first two generated files with content changes. The site is rebuilt by GitHub Actions. The zoomable map loads a pinned Markmap release from a CDN; the topic index, topic pages and equilibrium explainer also work without that dependency.
+For the equilibrium model's numerical checks, also run `node tools/test_equilibrium.cjs` with Node.js installed. These checks run in CI; Node.js is not needed to build or serve the site. The zoomable maps load a pinned Markmap release from a CDN. Topic browsing and local topic pages remain usable without it.
 
-## Contribute
+## Project layout
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md). Useful contributions include correcting one claim, improving a citation, reviewing one topic, adding a missing concept, or updating a frontier topic against recent literature. Issue forms and a pull request template are included.
+```text
+subjects.json                Subject metadata and publication URLs
+subjects/physics/            Physics nodes, explainer, provenance and exports
+subjects/chemistry/          Chemistry nodes, explainer, provenance and exports
+tools/                       Shared validator, builder, templates and tests
+.github/                     Contribution forms and GitHub Actions workflows
+site/                        Generated subject selector and subject sites
+```
 
-All initial topics are **AI-assisted drafts awaiting human subject review**. A source link is a starting point for verification, not a claim that a chemistry expert has checked the text. See [provenance/README.md](provenance/README.md) for the creation record and source-check limits.
+## Contribute and review
 
-## Publish on GitHub Pages
+Read [CONTRIBUTING.md](CONTRIBUTING.md). Useful contributions include correcting a claim, improving a citation, reviewing one topic, or updating a frontier question against recent literature.
 
-1. Create an empty repository named `chemistry-map` in the intended GitHub account and push this checkout to its `main` branch.
-2. In the repository's **Settings → Pages**, select **GitHub Actions** as the publishing source.
-3. Run the **Publish map** workflow, or push a change to `main`.
+Both collections await human subject review. Imported physics topics retain their original DeepSeek drafting and Claude AI review records; chemistry topics retain their Codex drafting records and empty reviewer fields. Moving them into SubjectMap does not constitute a new scientific review. See the [physics provenance](subjects/physics/provenance/README.md) and [chemistry provenance](subjects/chemistry/provenance/README.md) for the creation records and checking limits.
 
-The expected Pages address is `https://briany28.github.io/chemistry-map/` once deployment succeeds. If you use a different account or repository name, update `REPO` and `SITE_URL` in `tools/build.py` and the links in the issue forms, then rebuild.
+## First push and GitHub Pages
 
-## License and attribution
+The intended remote is `https://github.com/BrianY28/subjectmap.git`. With GitHub CLI authenticated and `origin` configured to that address, create the empty public repository and push:
 
-Content is [CC BY-SA 4.0](LICENSE-CONTENT.md). Build and site code is [MIT](LICENSE). The build tools and GitHub workflow are adapted from Physics Map at commit `361e305e8870a917193a0059af3aa1b1b665fef1`; the original copyright notice is retained. Chemistry topic content and the equilibrium explainer were newly drafted for this project.
+```bash
+gh repo create BrianY28/subjectmap --public --description "Open, sourced maps of physics and chemistry."
+git push -u origin main
+```
+
+If the repository already exists, skip its creation. In **Settings → Pages**, select **GitHub Actions** as the publishing source, then run **Publish maps** or push a change to `main`.
+
+The expected site address after successful deployment is `https://briany28.github.io/subjectmap/`. To use another destination, update `repository` and `site_url` in [subjects.json](subjects.json), update the issue-form links, and rebuild.
+
+## License and lineage
+
+SubjectMap builds on [Physics Map](https://github.com/BrianY28/physics-map) at commit `361e305e8870a917193a0059af3aa1b1b665fef1`. It brings the existing physics collection and the newly drafted chemistry collection together as peer subjects.
+
+Map content is [CC BY-SA 4.0](LICENSE-CONTENT.md). Shared build and site code is [MIT](LICENSE), with the original copyright notices retained. The imported physics explainer remains entirely CC BY-SA 4.0, including its embedded code; the chemistry explainer's JavaScript and CSS are MIT. See the license files for the exact scope and attribution requirements.

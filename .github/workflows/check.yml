@@ -15,8 +15,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.x"  # the build also runs on 3.9+, but the hosted runners no longer ship 3.9
-      - name: Check node files and generated INDEX.md / map.opml
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check both subjects and tracked indexes / OPML exports
         run: python3 tools/build.py --check
       - name: Test validation and site generation
         run: python3 -m unittest discover -s tools -p 'test_*.py'

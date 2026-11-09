@@ -1,8 +1,17 @@
 name: Frontier update
-description: Report a new result that changes an open node in 12-open-frontier.
+description: Report a new result that changes an open topic in either subject.
 title: "[Frontier] "
-labels: ["frontier-update"]
 body:
+  - type: dropdown
+    id: subject
+    attributes:
+      label: Subject
+      options:
+        - Physics
+        - Chemistry
+    validations:
+      required: true
+
   - type: markdown
     attributes:
       value: |
@@ -12,8 +21,8 @@ body:
     id: open-node
     attributes:
       label: Which open node
-      description: The file path or title of the open node, for example nodes/12-open-frontier/....
-      placeholder: nodes/12-open-frontier/predictive-synthesis.md
+      description: The file path or title of the open node, for example subjects/chemistry/nodes/12-open-frontier/....
+      placeholder: subjects/chemistry/nodes/12-open-frontier/predictive-synthesis.md
     validations:
       required: true
 

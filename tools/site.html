@@ -3,22 +3,42 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="An open map of chemistry: atoms, bonds, reactions, materials, life, and the research frontier. Explore sourced topics and contribute a correction.">
-<title>Chemistry Map — From Atoms to the Frontier</title>
-<link rel="stylesheet" href="assets/site.css">
+<meta name="description" content="__DESCRIPTION__ Explore sourced topics, their connections, and the research frontier.">
+<title>__SUBJECT_TITLE__ — __SITE_TITLE__</title>
+<link rel="stylesheet" href="../assets/site.css">
+<noscript><style>.markmap{display:none}</style></noscript>
 </head>
-<body>
+<body data-subject="__SUBJECT_ID__">
 <a href="#browse" class="skip">Skip to topic index</a>
-<header class="topbar"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">Ch</span>Chemistry Map</a><nav aria-label="Main navigation"><a href="#browse">Explore topics</a><a href="explainers/equilibrium/">Try an explainer</a><a href="map.opml" download>Download OPML</a></nav></header>
+<header class="topbar">
+  <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">S</span>__SITE_TITLE__</a>
+  <nav class="subject-nav" aria-label="Subjects"><a href="../index.html">All subjects</a>__SUBJECT_NAV__</nav>
+</header>
 <main id="main">
-<section class="intro" aria-labelledby="page-title"><div class="eyebrow">An open map of chemistry</div><h1 id="page-title">From atoms to the frontier.</h1><p>How matter is built, how it changes, and what we still have to discover. Follow the connections or start with a question.</p><div class="stats">__STATS__</div></section>
-<section class="map-shell" aria-label="Interactive chemistry mind map"><div class="map-top"><strong>The connected view</strong><span>__BRANCH_COUNT__ branches · expand a branch to explore its concepts</span></div><div class="markmap"><script type="text/template">
+<section class="intro" aria-labelledby="page-title">
+  <div class="eyebrow">__SUBJECT_NAME__ · An open knowledge map</div>
+  <h1 id="page-title">__HEADLINE__</h1>
+  <p>__DESCRIPTION__ Follow the connections or start with a question.</p>
+  <div class="stats">__STATS__</div>
+  <nav class="map-actions" aria-label="Explore __SUBJECT_NAME__"><a href="#browse">Explore topics ↓</a><a href="explainers/__EXPLAINER__/">Try an explainer</a><a href="map.opml" download>Download OPML</a></nav>
+</section>
+<section class="map-shell" aria-label="Interactive __SUBJECT_NAME__ mind map">
+  <div class="map-top"><strong>The connected view</strong><span>__BRANCH_COUNT__ branches · expand a branch to explore its concepts</span></div>
+  <div class="markmap"><script type="text/template">
 __MARKDOWN__
-</script></div><p class="map-note" id="map-status">Loading the visual map… The complete searchable topic index is below.</p><noscript><p class="map-note">JavaScript is off. Browse all topics using the index below.</p></noscript></section>
-<section id="browse" aria-labelledby="browse-title"><div class="browse-head"><div><div class="eyebrow">Choose a starting point</div><h2 id="browse-title">Explore the branches</h2><p>A learning path from the basics to open research questions.</p></div><div class="search"><label for="topic-search">Search topics, concepts, or scientists</label><input id="topic-search" type="search" placeholder="Try bonding, energy, or catalysis…" autocomplete="off"></div></div><p class="search-status" id="search-status" role="status">__NODE_COUNT__ topics · select a topic to read its concepts and sources</p><p class="empty" id="empty-results" hidden>No matching topics. Try a broader term or clear the search.</p><div class="branch-grid">__BRANCHES__</div></section>
-<footer class="footer"><span>Content: CC BY-SA 4.0 · Code: MIT · Adapted from <a href="https://github.com/BrianY28/physics-map">Physics Map</a></span><span>AI-assisted draft · expert review welcome</span></footer>
+</script></div>
+  <p class="map-note" id="map-status">Loading the visual map… The complete searchable topic index is below.</p>
+  <noscript><p class="map-note">JavaScript is off. Browse all topics using the index below.</p></noscript>
+</section>
+<section id="browse" aria-labelledby="browse-title">
+  <div class="browse-head"><div><div class="eyebrow">Choose a starting point</div><h2 id="browse-title">Explore the branches</h2><p>A learning path from the basics to open research questions.</p></div><div class="search"><label for="topic-search">Search topics, concepts, or scientists</label><input id="topic-search" type="search" placeholder="Search this subject…" autocomplete="off"></div></div>
+  <p class="search-status" id="search-status" role="status">__NODE_COUNT__ topics · select a topic to read its concepts and sources</p>
+  <p class="empty" id="empty-results" hidden>No matching topics. Try a broader term or clear the search.</p>
+  <div class="branch-grid">__BRANCHES__</div>
+</section>
+<footer class="footer"><span>__SITE_TITLE__ · <a href="../index.html#about">Sources, licensing and attribution</a></span><span>AI-assisted content · expert review welcome</span></footer>
 </main>
-<script src="assets/site.js"></script>
+<script src="../assets/site.js"></script>
 <script>window.markmap = { autoLoader: { toolbar: true } };</script>
 <script src="__MARKMAP__" defer></script>
 </body>

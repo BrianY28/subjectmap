@@ -2,7 +2,7 @@
 
 Chemistry Map was drafted on 10 November 2026 with Codex (AI). Parallel drafting tasks covered foundations and core chemistry (branches 01–06), applied chemistry and research questions (07–12), and the static-site generator. No human chemistry review has been completed. Empty `reviewed_by` fields preserve that distinction.
 
-The starting build tools and GitHub workflow came from the local checkout of [BrianY28/physics-map](https://github.com/BrianY28/physics-map), verified against remote HEAD `361e305e8870a917193a0059af3aa1b1b665fef1`. The original physics topics, explainer, AI logs and review claims were not carried over.
+The starting build tools and GitHub workflow came from the local checkout of [BrianY28/physics-map](https://github.com/BrianY28/physics-map), verified against remote HEAD `361e305e8870a917193a0059af3aa1b1b665fef1`. The chemistry collection does not reuse the original physics topics, explainer, AI logs or review claims.
 
 The chemistry outline contains 12 branches with six topics each. It is a broad learning map, not a comprehensive syllabus. Historical periods are orientation aids; they do not settle priority disputes. Sources appear in each node, while the accompanying source notes describe the checks and access limits during drafting.
 
@@ -25,3 +25,7 @@ Software validation checks structure, generated links and numerical behavior. It
 - A local Safari preview loaded and rendered the Markmap during integration. Full visual and narrow-screen browser QA was not completed: the browser automation host was unavailable, and native UI checks conflicted with concurrent browser use.
 
 An independent AI spot-check of branches 07–12 found and corrected wording about atom economy and conventional batteries. It also checked recent frontier reference identities. This is not human expert review, and no human-review credit was added.
+
+## Migration into SubjectMap
+
+The initial chemistry repository was subsequently renamed `subjectmap`, with chemistry moved to `subjects/chemistry/` and the original physics collection imported alongside it at `subjects/physics/`. The original chemistry commit remains in Git history. Topic text, sources and review fields were preserved during this move. The initial validation counts above describe the original chemistry-only build; the combined build is validated separately by the shared test suite.

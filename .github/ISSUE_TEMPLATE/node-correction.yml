@@ -1,8 +1,17 @@
 name: Node correction
 description: Report a factual error, a wrong or missing source, or an unclear note in an existing node.
 title: "[Correction] "
-labels: ["node-correction"]
 body:
+  - type: dropdown
+    id: subject
+    attributes:
+      label: Subject
+      options:
+        - Physics
+        - Chemistry
+    validations:
+      required: true
+
   - type: markdown
     attributes:
       value: |
@@ -13,7 +22,7 @@ body:
     attributes:
       label: Node file path or title
       description: The path of the Markdown file, or the node title if you are not sure of the path.
-      placeholder: nodes/03-thermodynamics-equilibrium/entropy-and-free-energy.md
+      placeholder: subjects/chemistry/nodes/03-thermodynamics-equilibrium/entropy-and-free-energy.md
     validations:
       required: true
 

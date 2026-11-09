@@ -1,5 +1,5 @@
 blank_issues_enabled: true
 contact_links:
   - name: Contribution guide
-    url: https://github.com/BrianY28/chemistry-map/blob/main/CONTRIBUTING.md
+    url: https://github.com/BrianY28/subjectmap/blob/main/CONTRIBUTING.md
     about: How to write a node, cite sources, and open a pull request.

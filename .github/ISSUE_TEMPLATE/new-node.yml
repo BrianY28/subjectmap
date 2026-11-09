@@ -1,8 +1,17 @@
 name: New node
 description: Propose a new node for the map, with a draft note, concepts, and sources.
 title: "[New node] "
-labels: ["new-node"]
 body:
+  - type: dropdown
+    id: subject
+    attributes:
+      label: Subject
+      options:
+        - Physics
+        - Chemistry
+    validations:
+      required: true
+
   - type: markdown
     attributes:
       value: |
@@ -17,24 +26,12 @@ body:
     validations:
       required: true
 
-  - type: dropdown
+  - type: input
     id: branch
     attributes:
-      label: Branch
-      description: The folder the node belongs in.
-      options:
-        - 01-foundations-atoms
-        - 02-bonding-structure
-        - 03-thermodynamics-equilibrium
-        - 04-kinetics-catalysis
-        - 05-inorganic-chemistry
-        - 06-organic-chemistry
-        - 07-analytical-chemistry
-        - 08-electrochemistry-interfaces
-        - 09-biochemistry-chemical-biology
-        - 10-polymers-materials
-        - 11-environmental-green-chemistry
-        - 12-open-frontier
+      label: Branch folder
+      description: The full branch path within the selected subject.
+      placeholder: subjects/chemistry/nodes/03-thermodynamics-equilibrium
     validations:
       required: true
 

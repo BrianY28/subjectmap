@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const html = fs.readFileSync(path.join(__dirname, '../explainers/equilibrium/index.html'), 'utf8');
+const html = fs.readFileSync(path.join(__dirname, '../subjects/chemistry/explainers/equilibrium/index.html'), 'utf8');
 const script = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).join('\n');
 assert.ok(script, 'The explainer must contain its interactive code.');
 const elements = new Map();

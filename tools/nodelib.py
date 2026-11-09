@@ -121,28 +121,30 @@ def parse_body(body, where):
     return title, note, concepts
 
 
-def load():
+def load(root=None):
     """Return the whole map: [{dir, title, span, summary, nodes: [...]}, ...]."""
+    root = Path(root) if root is not None else ROOT
+    nodes_dir = root / "nodes" if root != ROOT else NODES
     branches = []
-    if not NODES.is_dir():
+    if not nodes_dir.is_dir():
         raise NodeError("nodes/: missing directory")
-    for bdir in sorted(p for p in NODES.iterdir() if p.is_dir()):
+    for bdir in sorted(p for p in nodes_dir.iterdir() if p.is_dir()):
         readme = bdir / "README.md"
         if not readme.is_file():
             raise NodeError(f"nodes/{bdir.name}/: missing README.md")
-        meta, body = parse_front_matter(readme.read_text(encoding="utf-8"), str(readme.relative_to(ROOT)))
+        meta, body = parse_front_matter(readme.read_text(encoding="utf-8"), str(readme.relative_to(root)))
         lines = body.strip().splitlines()
         if not lines or not lines[0].startswith("# ") or not lines[0][2:].strip():
-            raise NodeError(f"{readme.relative_to(ROOT)}: branch body must start with '# Title'")
+            raise NodeError(f"{readme.relative_to(root)}: branch body must start with '# Title'")
         unknown = set(meta) - BRANCH_FIELDS
         if unknown:
-            raise NodeError(f"{readme.relative_to(ROOT)}: unknown field(s) {sorted(unknown)}")
+            raise NodeError(f"{readme.relative_to(root)}: unknown field(s) {sorted(unknown)}")
         btitle, summary = lines[0][2:].strip(), "\n".join(lines[1:]).strip()
         nodes = []
         for f in sorted(bdir.glob("*.md")):
             if f.name == "README.md":
                 continue
-            rel = str(f.relative_to(ROOT))
+            rel = str(f.relative_to(root))
             m, b = parse_front_matter(f.read_text(encoding="utf-8"), rel)
             if not re.fullmatch(r"[0-9]+", str(m.get("order", ""))):
                 raise NodeError(f"{rel}: 'order' must be a whole number")
@@ -152,12 +154,13 @@ def load():
             title, note, concepts = parse_body(b, rel)
             nodes.append({"id": f.stem, "path": rel, "title": title, "note": note, "concepts": concepts, **m})
         nodes.sort(key=lambda n: int(n.get("order", 0)))
-        branches.append({"dir": bdir.name, "path": str(readme.relative_to(ROOT)), "title": btitle,
+        branches.append({"dir": bdir.name, "path": str(readme.relative_to(root)), "title": btitle,
                          "summary": summary, "nodes": nodes, **meta})
     return branches
 
 
-def validate(branches):
+def validate(branches, root=None):
+    root = Path(root) if root is not None else ROOT
     errs, ids = [], {}
     if not branches:
         errs.append("nodes/: add at least one branch")
@@ -217,7 +220,7 @@ def validate(branches):
                     if not match:
                         errs.append(f"{p}: explainer must be ../../explainers/lowercase-name/")
                     else:
-                        target = ROOT / "explainers" / match.group(1) / "index.html"
-                        if not target.is_file() or not target.resolve().is_relative_to((ROOT / "explainers").resolve()):
+                        target = root / "explainers" / match.group(1) / "index.html"
+                        if not target.is_file() or not target.resolve().is_relative_to((root / "explainers").resolve()):
                             errs.append(f"{p}: explainer must point to an existing page inside explainers/")
     return errs

@@ -1,0 +1,27 @@
+{
+  "title": "SubjectMap",
+  "repository": "https://github.com/BrianY28/subjectmap",
+  "site_url": "https://briany28.github.io/subjectmap/",
+  "subjects": [
+    {
+      "id": "physics",
+      "name": "Physics",
+      "title": "Physics Map",
+      "map_title": "Physics: From Newton to the Frontier",
+      "headline": "From Newton to the frontier.",
+      "description": "Motion, fields, matter and the universe: explore the ideas that connect the physical world.",
+      "symbol": "Ph",
+      "explainer": "first-law"
+    },
+    {
+      "id": "chemistry",
+      "name": "Chemistry",
+      "title": "Chemistry Map",
+      "map_title": "Chemistry: From Atoms to the Frontier",
+      "headline": "From atoms to the frontier.",
+      "description": "How matter is built, how it changes, and what we still have to discover.",
+      "symbol": "Ch",
+      "explainer": "equilibrium"
+    }
+  ]
+}

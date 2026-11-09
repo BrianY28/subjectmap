@@ -20,6 +20,7 @@
   });
   const map = document.querySelector('.markmap');
   const note = document.querySelector('#map-status');
+  if (!map || !note) return;
   let ready = false;
   const observer = new MutationObserver(() => {
     if (map.querySelector('svg g')) {
@@ -30,6 +31,8 @@
   });
   observer.observe(map, {childList:true, subtree:true});
   setTimeout(() => {
-    if (!ready) note.textContent = 'The visual map needs an internet connection. Every topic remains readable using the index below.';
+    if (!ready) {
+      note.textContent = 'The visual map needs an internet connection. Every topic remains readable using the index below.';
+    }
   }, 8000);
 })();

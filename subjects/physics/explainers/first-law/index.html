@@ -1,0 +1,1558 @@
+<title>Newton's First Law</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #e9eef0;
+    --surface: #f7fafb;
+    --surface-2: #dde5e8;
+    --ink: #0e1a20;
+    --ink-muted: #54676f;
+    --rule: #c3d0d5;
+    --rule-strong: #8ea3ab;
+    --accent: #0c6b72;
+    --accent-strong: #08545a;
+    --accent-ink: #ffffff;
+    --signal: #a8451c;
+    --grid: #d3dee2;
+    --focus: #0c6b72;
+    --font-serif: "Spectral", Georgia, "Times New Roman", serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0a1114;
+      --surface: #101b20;
+      --surface-2: #18272d;
+      --ink: #e5eef1;
+      --ink-muted: #9cb0b8;
+      --rule: #25373e;
+      --rule-strong: #3d5a64;
+      --accent: #57d2c8;
+      --accent-strong: #7ee3da;
+      --accent-ink: #04201f;
+      --signal: #f0906a;
+      --grid: #1c2c33;
+      --focus: #57d2c8;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0a1114;
+    --surface: #101b20;
+    --surface-2: #18272d;
+    --ink: #e5eef1;
+    --ink-muted: #9cb0b8;
+    --rule: #25373e;
+    --rule-strong: #3d5a64;
+    --accent: #57d2c8;
+    --accent-strong: #7ee3da;
+    --accent-ink: #04201f;
+    --signal: #f0906a;
+    --grid: #1c2c33;
+    --focus: #57d2c8;
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 700px;
+    margin-inline: auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 26px 76px;
+  }
+
+  .page p, .page li { max-width: 65ch; }
+
+  h1, h2, h3 { text-wrap: balance; }
+
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:hover { color: var(--accent-strong); }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  /* keeps symbols, variables and units out of the uppercase treatment */
+  .sym { text-transform: none; }
+
+  /* ---------- masthead ---------- */
+  .masthead {
+    border-bottom: 3px double var(--rule-strong);
+    padding-bottom: 18px;
+    margin-bottom: 34px;
+  }
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--ink-muted);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .crumbs .sep { color: var(--rule-strong); }
+  .crumbs strong { color: var(--accent); font-weight: 500; }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-size: clamp(1.85rem, 6.4vw, 2.55rem);
+    line-height: 1.08;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    margin: 0 0 12px;
+  }
+  .standfirst {
+    font-size: 1.06rem;
+    color: var(--ink-muted);
+    margin: 0 0 14px;
+  }
+  .to-node {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .to-node a {
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule-strong);
+    padding-bottom: 1px;
+  }
+
+  /* ---------- sections ---------- */
+  section { margin-top: 46px; }
+  h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 1.26rem;
+    font-weight: 600;
+    margin: 0 0 16px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--rule);
+  }
+  h2 .num {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+  h3 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin: 22px 0 6px;
+  }
+  p { margin: 0 0 14px; }
+
+  /* ---------- quote plate ---------- */
+  .plate-quote {
+    margin: 0 0 20px;
+    padding: 16px 18px 12px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+  }
+  .plate-quote blockquote { margin: 0; }
+  .latin {
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--ink);
+    margin: 0 0 12px;
+  }
+  .trans {
+    font-size: 1.04rem;
+    margin: 0 0 12px;
+  }
+  .plate-quote figcaption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+    letter-spacing: 0.01em;
+  }
+  .plain {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 12px 0;
+    margin: 20px 0;
+    font-size: 1.06rem;
+  }
+  .plain strong { font-weight: 600; }
+
+  /* ---------- panels ---------- */
+  .panel {
+    margin-block: 22px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+  }
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .panel-head .plate { color: var(--accent); }
+  .panel-head > span { min-width: 0; }
+  canvas {
+    display: block;
+    width: 100%;
+    background: var(--surface);
+  }
+  .cv-puck { height: 262px; }
+  .cv-ramp { height: 190px; }
+  .cv-frame { height: 196px; }
+
+  .readouts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .readouts > div {
+    padding: 7px 9px 9px;
+    border-right: 1px solid var(--rule);
+    min-width: 0;
+  }
+  .readouts > div:last-child { border-right: 0; }
+  .readouts dt {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.35;
+  }
+  .readouts dd {
+    margin: 3px 0 0;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.3;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 10px 12px;
+    padding: 10px;
+    border-top: 1px solid var(--rule);
+  }
+  .field { flex: 1 1 170px; min-width: 140px; }
+  .field-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .field label, .seg-legend {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .field output {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+  input[type="range"] {
+    width: 100%;
+    margin: 0;
+    accent-color: var(--accent);
+  }
+  button {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 7px 13px;
+    border-radius: 2px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: var(--accent-ink);
+    cursor: pointer;
+  }
+  button.ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--rule-strong);
+  }
+  button:hover { border-color: var(--accent-strong); }
+  button.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .note {
+    margin: 0;
+    padding: 0 10px 11px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink-muted);
+    max-width: none;
+  }
+  .note strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- segmented control ---------- */
+  fieldset.segmented {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    flex: 1 1 100%;
+  }
+  .seg {
+    display: flex;
+    border: 1px solid var(--rule-strong);
+    border-radius: 2px;
+    overflow: hidden;
+    width: 100%;
+  }
+  .seg input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .seg label {
+    flex: 1 1 50%;
+    text-align: center;
+    padding: 7px 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    cursor: pointer;
+    background: transparent;
+  }
+  .seg label + input + label { border-left: 1px solid var(--rule-strong); }
+  .seg input:checked + label {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .seg input:focus-visible + label {
+    outline: 2px solid var(--focus);
+    outline-offset: -3px;
+  }
+
+  /* ---------- common mistake ---------- */
+  .mistake {
+    margin: 18px 0 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule);
+    font-size: 0.98rem;
+  }
+  .mistake strong {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-right: 4px;
+  }
+
+  /* ---------- timeline ---------- */
+  .timeline {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    border-left: 1px solid var(--rule);
+  }
+  .timeline li {
+    position: relative;
+    padding: 0 0 18px 20px;
+    max-width: 65ch;
+  }
+  .timeline li::before {
+    content: "";
+    position: absolute;
+    left: -3.5px;
+    top: 8px;
+    width: 7px;
+    height: 7px;
+    background: var(--rule-strong);
+  }
+  .timeline .when {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+  .timeline p { margin: 0; }
+  .timeline strong { font-weight: 600; }
+
+  /* ---------- details ---------- */
+  .history {
+    margin-top: 34px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .history summary {
+    padding: 12px 0;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .history summary::marker { color: var(--accent); }
+  .history[open] summary {
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 16px;
+  }
+  .history .timeline { margin: 0 0 16px; }
+
+  /* ---------- examples ---------- */
+  .examples { list-style: none; margin: 16px 0 0; padding: 0; }
+  .examples li {
+    padding: 12px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .examples li:last-child { border-bottom: 1px solid var(--rule); }
+  .examples b {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .examples p { margin: 0; }
+
+  /* ---------- sources ---------- */
+  .sources {
+    margin-top: 34px;
+    border-top: 1px solid var(--rule);
+    padding-top: 14px;
+  }
+  .sources h2 {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border: 0;
+    padding: 0;
+    margin: 0 0 8px;
+  }
+  .sources ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+  .sources li { margin: 0 0 5px; max-width: 65ch; }
+
+  /* ---------- map block ---------- */
+  .mapblock {
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    padding: 16px 16px 14px;
+    margin-top: 18px;
+  }
+  .footer-title {
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .mapblock .path {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--ink-muted);
+    margin: 0 0 12px;
+  }
+  .mapblock .path strong { color: var(--accent); font-weight: 500; }
+  .maplinks { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 10px; }
+  .maplinks a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule-strong);
+    padding-bottom: 1px;
+  }
+  .maplinks a:hover { border-color: var(--accent); }
+  .mapblock .fine {
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--ink-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; }
+  }
+
+  @media (max-width: 430px) {
+    .readouts dd { font-size: 12.5px; }
+    .readouts dt { font-size: 8.5px; }
+    .cv-puck { height: 240px; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <nav class="crumbs" aria-label="Location in the physics map">
+      <span>Physics: From Newton to the Frontier</span>
+      <span class="sep">›</span>
+      <span>Newtonian mechanics</span>
+      <span class="sep">›</span>
+      <span>Newton's laws</span>
+      <span class="sep">›</span>
+      <strong>First law: inertia</strong>
+    </nav>
+    <p class="kicker">Lex I · Principia, 1687</p>
+    <h1>Newton's first law: inertia</h1>
+    <p class="standfirst">A body keeps its velocity until a net force changes it, and one rule covers a puck on ice, a ball in a braking bus and a spacecraft coasting between the stars.</p>
+    <p class="to-node"><a href="../../index.html" target="_blank" rel="noopener">View in the physics map</a> <span aria-hidden="true">·</span> <a href="https://github.com/BrianY28/subjectmap/blob/main/subjects/physics/nodes/01-newtonian-mechanics/newtons-laws.md" target="_blank" rel="noopener">Edit this node on GitHub</a></p>
+  </header>
+
+  <section id="law">
+    <h2><span class="num">§ 1</span> The law</h2>
+
+    <figure class="plate-quote">
+      <blockquote>
+        <p class="latin" lang="la">Corpus omne perseverare in statu suo quiescendi vel movendi uniformiter in directum, nisi quatenus a viribus impressis cogitur statum illum mutare.</p>
+        <p class="trans">Every body perseveres in its state of rest, or of uniform motion in a right line, unless it is compelled to change that state by forces impress'd thereon.</p>
+      </blockquote>
+      <figcaption>Isaac Newton, <cite>Philosophiæ Naturalis Principia Mathematica</cite>, Book I, Lex I, 1687. English: Andrew Motte's translation, 1729.</figcaption>
+    </figure>
+
+    <p class="plain">In one plain sentence: <strong>a body keeps moving in a straight line at a constant speed, or stays at rest, unless a net force acts on it.</strong></p>
+
+    <p>Uniform motion means constant velocity: speed and direction both stay fixed. Rest is the special case of zero velocity.</p>
+  </section>
+
+  <section id="friction">
+    <h2><span class="num">§ 2</span> Friction dial</h2>
+
+    <p>A puck slides at 6.00 m/s on a level track. Kinetic friction decelerates it at <em>a</em> = μ<em>g</em>, so the net force per kilogram is μ<em>g</em>, with <em>g</em> = 9.81 m/s². Set μ to zero and the speed–time graph flattens.</p>
+
+    <div class="panel">
+      <div class="panel-head"><span class="plate">Plate I</span><span>Level track, sliding puck</span></div>
+      <canvas id="puckCanvas" class="cv-puck" role="img" aria-label="A puck sliding on a level track above a live speed-versus-time graph. The speed falls linearly when friction is present and stays constant when the friction coefficient is zero."></canvas>
+      <dl class="readouts">
+        <div><dt>Friction <span class="sym">μ</span></dt><dd id="muOut">0.12</dd></div>
+        <div><dt>Net force (per <span class="sym">kg</span>)</dt><dd id="forceOut">1.18 N/kg</dd></div>
+        <div><dt>Speed</dt><dd id="speedOut">6.00 m/s</dd></div>
+      </dl>
+      <div class="controls">
+        <div class="field">
+          <div class="field-row">
+            <label for="mu">Friction coefficient <span class="sym">μ</span></label>
+            <output id="muVal" for="mu">0.12</output>
+          </div>
+          <input type="range" id="mu" min="0" max="0.30" step="0.01" value="0.12">
+        </div>
+        <button type="button" id="puckStart">Start</button>
+        <button type="button" id="puckReset" class="ghost">Reset</button>
+      </div>
+      <p class="note" id="puckNote">Friction decelerates the puck at a = μg. Press Start to run the clock.</p>
+    </div>
+
+    <p class="mistake"><strong>Common mistake:</strong> 'Moving things need a force to keep moving.'</p>
+    <p>Friction and air drag hide the truth: your push usually cancels friction, leaving almost no net force. Remove friction and the puck keeps its velocity with no push at all.</p>
+  </section>
+
+  <section id="ramps">
+    <h2><span class="num">§ 3</span> Galileo's two ramps</h2>
+
+    <p>Release a ball from height <em>h</em> on one inclined plane and let it climb a second. With no friction it returns to height <em>h</em>, and a shallower second plane makes <em>d</em> = <em>h</em> / sin θ longer. Galileo argued this from experiments in the <cite>Two New Sciences</cite> (1638) and made the case for persisting horizontal motion in the <cite>Dialogue</cite> (1632).</p>
+
+    <div class="panel">
+      <div class="panel-head"><span class="plate">Plate II</span><span>Two inclined planes, no friction</span></div>
+      <canvas id="rampCanvas" class="cv-ramp" role="img" aria-label="A ball released from height h rolls down one ramp and up a second ramp at angle theta, always reaching height h. The distance travelled up the second ramp grows as theta shrinks."></canvas>
+      <dl class="readouts">
+        <div><dt>Angle <span class="sym">θ</span></dt><dd id="thetaOut">45°</dd></div>
+        <div><dt>Distance <span class="sym">d = h / sin θ</span></dt><dd id="dOut">1.41 m</dd></div>
+        <div><dt>Travelled up ramp</dt><dd id="distOut">0.00 m</dd></div>
+      </dl>
+      <div class="controls">
+        <div class="field">
+          <div class="field-row">
+            <label for="theta">Second ramp angle <span class="sym">θ</span></label>
+            <output id="thetaVal" for="theta">45°</output>
+          </div>
+          <input type="range" id="theta" min="0" max="45" step="1" value="45">
+        </div>
+        <button type="button" id="rampRun">Release ball</button>
+        <button type="button" id="rampReset" class="ghost">Reset</button>
+      </div>
+      <p class="note" id="rampNote">The ball trades height for speed on the way down and speed for height on the way up.</p>
+    </div>
+
+    <p class="mistake"><strong>Common mistake:</strong> 'Objects naturally slow down.'</p>
+    <p>Slowing always comes from a force opposing the motion. A puck with μ = 0.10 decelerates at 0.98 m/s², and with μ = 0.00 it does not decelerate at all.</p>
+  </section>
+
+  <section id="frames">
+    <h2><span class="num">§ 4</span> Which frame?</h2>
+
+    <p>A bus brakes at 5.0 m/s² from 4.0 m/s. A ball rests on its frictionless floor, so no horizontal force acts on the ball. Watch the same event from the street and from a seat in the bus.</p>
+
+    <div class="panel">
+      <div class="panel-head"><span class="plate">Plate III</span><span>Braking bus · <span class="sym">slow motion ×0.25</span></span></div>
+      <canvas id="frameCanvas" class="cv-frame" role="img" aria-label="A bus braking with a ball on its frictionless floor, shown either from the ground frame or from inside the bus. In the ground frame the ball keeps a constant velocity until it reaches the front wall. In the bus frame the ball accelerates forward with no force acting on it."></canvas>
+      <dl class="readouts">
+        <div><dt>Bus speed (ground)</dt><dd id="busSpeedOut">4.0 m/s</dd></div>
+        <div><dt>Ball speed (ground)</dt><dd id="ballSpeedOut">4.0 m/s</dd></div>
+        <div><dt>Net force on ball</dt><dd id="ballForceOut">0 N</dd></div>
+      </dl>
+      <div class="controls">
+        <fieldset class="segmented">
+          <legend class="seg-legend">Viewpoint</legend>
+          <div class="seg">
+            <input type="radio" id="viewStreet" name="frameView" value="street" checked>
+            <label for="viewStreet">Street view</label>
+            <input type="radio" id="viewBus" name="frameView" value="bus">
+            <label for="viewBus">Passenger view</label>
+          </div>
+        </fieldset>
+        <button type="button" id="frameRun">Run braking</button>
+        <button type="button" id="frameReset" class="ghost">Reset</button>
+      </div>
+      <p class="note" id="frameNote" aria-live="polite">Ground frame: the ball keeps a constant velocity of 4.0 m/s while the bus slows. Net force on the ball is zero, so its motion stays uniform. The first law holds here.</p>
+    </div>
+
+    <p class="mistake"><strong>Common mistake:</strong> 'The first law is just F = ma with F = 0.'</p>
+    <p>In the street frame the ball has zero net force and zero acceleration. In the bus frame it accelerates forward at 5.0 m/s² while nothing pushes it, so F = ma fails until you add a fictitious force <span class="sym">−<em>m</em>·<em>a</em><sub>bus</sub></span>. The first law identifies the inertial frames where the plain equation works.</p>
+  </section>
+
+  <section id="examples">
+    <h2><span class="num">§ 5</span> Where you meet it</h2>
+
+    <ul class="examples">
+      <li>
+        <b>Seat belts</b>
+        <p>A seat belt supplies the force that changes your velocity when a car brakes; without it you keep the car's previous speed.</p>
+      </li>
+      <li>
+        <b>The tablecloth trick</b>
+        <p>Pull a cloth quickly and friction acts on the plate for too short a time to change its velocity much.</p>
+      </li>
+      <li>
+        <b>Voyager 1 coasting</b>
+        <p>Voyager 1, launched in 1977 and in interstellar space since 2012, moves at about 17 km/s relative to the Sun; the Sun's weak gravity makes its motion nearly but not exactly uniform.</p>
+      </li>
+    </ul>
+  </section>
+
+  <details class="history">
+    <summary>How the idea arrived: Aristotle to Newton</summary>
+    <ol class="timeline">
+      <li>
+        <span class="when">4th century BCE</span>
+        <p><strong>Aristotle</strong> held that motion needs a mover; projectiles were kept moving by the air.</p>
+      </li>
+      <li>
+        <span class="when">6th century CE</span>
+        <p><strong>John Philoponus</strong> of Alexandria argued that a thrower impresses a motive force on a projectile.</p>
+      </li>
+      <li>
+        <span class="when">14th century</span>
+        <p><strong>Jean Buridan</strong> made impetus proportional to a body's quantity of matter and to its speed.</p>
+      </li>
+      <li>
+        <span class="when">1632 and 1638</span>
+        <p><strong>Galileo Galilei</strong>: a ball returns to its release height; his inertia was horizontal motion along the Earth's surface.</p>
+      </li>
+      <li>
+        <span class="when">1644</span>
+        <p><strong>René Descartes</strong>, in <cite>Principles of Philosophy</cite> (1644), first stated straight-line inertia.</p>
+      </li>
+      <li>
+        <span class="when">1687</span>
+        <p><strong>Isaac Newton</strong> made straight-line inertia the first law in the <cite>Principia</cite> and built mechanics on it.</p>
+      </li>
+    </ol>
+  </details>
+
+  <section id="sources" class="sources" aria-label="Sources">
+    <h2>Sources</h2>
+    <ul>
+      <li>Newton, I. (1687). <cite>Philosophiae Naturalis Principia Mathematica</cite>. London.</li>
+      <li>Newton, I. (1729). <cite>The Mathematical Principles of Natural Philosophy</cite> (A. Motte, Trans.). London: Benjamin Motte.</li>
+      <li>Galilei, G. (1632). <cite>Dialogo sopra i due massimi sistemi del mondo</cite>. Florence.</li>
+      <li>Galilei, G. (1638). <cite>Discorsi e dimostrazioni matematiche intorno a due nuove scienze</cite>. Leiden: Elzevir.</li>
+      <li>Descartes, R. (1644). <cite>Principia Philosophiae</cite>. Amsterdam: Elzevir.</li>
+    </ul>
+  </section>
+
+  <footer class="mapblock" id="map" aria-labelledby="map-title">
+    <p class="footer-title" id="map-title">In the map</p>
+    <p class="path">Physics: From Newton to the Frontier › Newtonian mechanics › Newton's laws › <strong>First law: inertia</strong></p>
+    <p class="maplinks">
+      <a href="../../index.html" target="_blank" rel="noopener">View the full map</a>
+      <a href="https://github.com/BrianY28/subjectmap/blob/main/subjects/physics/nodes/01-newtonian-mechanics/newtons-laws.md" target="_blank" rel="noopener">Edit this node on GitHub</a>
+      <a href="https://github.com/BrianY28/subjectmap/issues/new/choose" target="_blank" rel="noopener">Report a mistake</a>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var G = 9.81;
+  var MONO = '"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace';
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function cssv(name) {
+    var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || "#000000";
+  }
+  function pal() {
+    return {
+      ink: cssv("--ink"),
+      muted: cssv("--ink-muted"),
+      rule: cssv("--rule"),
+      strong: cssv("--rule-strong"),
+      accent: cssv("--accent"),
+      signal: cssv("--signal"),
+      grid: cssv("--grid"),
+      panel: cssv("--surface-2"),
+      surface: cssv("--surface")
+    };
+  }
+  function txt(ctx, str, x, y, color, align, size, baseline) {
+    ctx.fillStyle = color;
+    ctx.font = (size || 10) + "px " + MONO;
+    ctx.textAlign = align || "left";
+    ctx.textBaseline = baseline || "alphabetic";
+    ctx.fillText(str, x, y);
+  }
+  function labelClamped(ctx, text, cx, y, color, w) {
+    ctx.font = "10px " + MONO;
+    var tw = ctx.measureText(text).width;
+    var x = Math.max(tw / 2 + 6, Math.min(w - tw / 2 - 6, cx));
+    ctx.fillStyle = color;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "alphabetic";
+    ctx.fillText(text, x, y);
+  }
+  function arrow(ctx, x1, y1, x2, y2, color, lw, head) {
+    var dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+    if (len < 3) return;
+    var ux = dx / len, uy = dy / len;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lw;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2 - ux * head, y2 - uy * head);
+    ctx.stroke();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - ux * head - uy * head * 0.55, y2 - uy * head + ux * head * 0.55);
+    ctx.lineTo(x2 - ux * head + uy * head * 0.55, y2 - uy * head - ux * head * 0.55);
+    ctx.closePath();
+    ctx.fill();
+  }
+  function roundRectPath(ctx, x, y, w, h, r) {
+    r = Math.min(r, Math.abs(w) / 2, Math.abs(h) / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
+  /* ---------------- canvas registry ---------------- */
+  var items = [];
+  function reg(id, draw) {
+    var cv = document.getElementById(id);
+    var it = { cv: cv, ctx: cv.getContext("2d"), w: 0, h: 0, draw: draw };
+    items.push(it);
+    return it;
+  }
+  function resizeAll() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      var r = it.cv.getBoundingClientRect();
+      if (r.width < 1) continue;
+      it.w = r.width;
+      it.h = r.height;
+      it.cv.width = Math.round(r.width * dpr);
+      it.cv.height = Math.round(r.height * dpr);
+      it.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      it.draw();
+    }
+  }
+
+  /* ================= PLATE I : friction dial ================= */
+  var V0 = 6.0;
+  var puck = { s: 0, v: V0, t: 0, mu: 0.12, running: false, atRest: false, last: 0, raf: 0, samples: [{ t: 0, v: V0 }] };
+  var puckC = null;
+
+  var muInput = document.getElementById("mu");
+  var muVal = document.getElementById("muVal");
+  var muOut = document.getElementById("muOut");
+  var forceOut = document.getElementById("forceOut");
+  var speedOut = document.getElementById("speedOut");
+  var puckNote = document.getElementById("puckNote");
+  var puckStartBtn = document.getElementById("puckStart");
+  var puckResetBtn = document.getElementById("puckReset");
+
+  function setText(el, s) {
+    if (el && el.textContent !== s) el.textContent = s;
+  }
+
+  function puckReadouts() {
+    setText(muOut, puck.mu.toFixed(2));
+    setText(forceOut, (puck.mu * G).toFixed(2) + " N/kg");
+    setText(speedOut, puck.v.toFixed(2) + " m/s");
+    if (puck.mu === 0 && puck.v > 0.0001) {
+      setText(puckNote, "No friction. The net force on the puck is zero, so the speed holds at " + puck.v.toFixed(2) + " m/s and the track scrolls past.");
+    } else if (puck.mu === 0) {
+      setText(puckNote, "No friction, and the puck is at rest. With zero net force it stays at rest.");
+    } else if (puck.v <= 0.0001) {
+      setText(puckNote, "The puck has stopped. Friction did the work, and with zero net force it now stays at rest.");
+    } else {
+      setText(puckNote, "Friction decelerates the puck at a = μg = " + (puck.mu * G).toFixed(2) + " m/s². Press Start to run the clock.");
+    }
+  }
+
+  function drawPuck() {
+    var o = puckC;
+    if (!o || !o.w) return;
+    var ctx = o.ctx, w = o.w, h = o.h;
+    var P = pal();
+    ctx.clearRect(0, 0, w, h);
+
+    var trackH = Math.max(56, Math.round(h * 0.26));
+    var groundY = trackH - 22;
+    var inset = 22;
+    var scale = Math.min(200, Math.max(60, w / 4.2));
+    var viewW = (w - inset - 10) / scale;
+    var camX = Math.max(0, puck.s - 0.45 * viewW);
+
+    ctx.strokeStyle = P.strong;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, groundY);
+    ctx.lineTo(w, groundY);
+    ctx.stroke();
+
+    var step = 0.25;
+    var first = Math.floor(camX / step) * step;
+    for (var m = first; m < camX + viewW + step; m += step) {
+      var x = inset + (m - camX) * scale;
+      if (x < -30 || x > w + 30) continue;
+      var isM = Math.abs(m - Math.round(m)) < 1e-6;
+      ctx.strokeStyle = isM ? P.strong : P.rule;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, groundY + 2);
+      ctx.lineTo(x, groundY + (isM ? 10 : 5));
+      ctx.stroke();
+      if (isM) txt(ctx, Math.round(m) + " m", x, groundY + 16, P.muted, "center", 9.5);
+    }
+
+    var px = inset + (puck.s - camX) * scale;
+    ctx.fillStyle = P.accent;
+    roundRectPath(ctx, px - 17, groundY - 10, 34, 10, 5);
+    ctx.fill();
+    ctx.strokeStyle = P.ink;
+    ctx.lineWidth = 1;
+    ctx.globalAlpha = 0.25;
+    ctx.beginPath();
+    ctx.moveTo(px - 13, groundY + 0.5);
+    ctx.lineTo(px + 13, groundY + 0.5);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    ctx.strokeStyle = P.rule;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, trackH + 0.5);
+    ctx.lineTo(w, trackH + 0.5);
+    ctx.stroke();
+
+    /* graph */
+    var gl = 38, gr = w - 12, gt = trackH + 20, gb = h - 32;
+    var vMax = 7, winT = 6;
+    var tMin = Math.max(0, puck.t - winT);
+
+    for (var vv = 0; vv <= 6; vv += 2) {
+      var gy = gb - (vv / vMax) * (gb - gt);
+      ctx.strokeStyle = P.grid;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(gl, gy + 0.5);
+      ctx.lineTo(gr, gy + 0.5);
+      ctx.stroke();
+      txt(ctx, String(vv), gl - 6, gy, P.muted, "right", 9.5, "middle");
+    }
+
+    var tStart = Math.ceil(tMin);
+    for (var tt = tStart; tt <= tMin + winT + 0.001; tt += 1) {
+      var gx = gl + ((tt - tMin) / winT) * (gr - gl);
+      ctx.strokeStyle = P.grid;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(gx + 0.5, gt);
+      ctx.lineTo(gx + 0.5, gb);
+      ctx.stroke();
+      txt(ctx, String(tt), gx, gb + 14, P.muted, "center", 9.5);
+    }
+
+    ctx.strokeStyle = P.strong;
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(gl, gt);
+    ctx.lineTo(gl, gb);
+    ctx.lineTo(gr, gb);
+    ctx.stroke();
+
+    txt(ctx, "v (m/s)", gl - 6, gt - 6, P.muted, "right", 9.5);
+    txt(ctx, "t (s)", gr, gb + 27, P.muted, "right", 9.5);
+
+    var started = false;
+    ctx.beginPath();
+    for (var i = 0; i < puck.samples.length; i++) {
+      var p = puck.samples[i];
+      if (p.t < tMin - 0.02) continue;
+      var sx = gl + ((p.t - tMin) / winT) * (gr - gl);
+      var sy = gb - (Math.min(p.v, vMax) / vMax) * (gb - gt);
+      if (!started) { ctx.moveTo(sx, sy); started = true; }
+      else ctx.lineTo(sx, sy);
+    }
+    if (started) {
+      ctx.strokeStyle = P.accent;
+      ctx.lineWidth = 2;
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.stroke();
+    }
+
+    var lx = gl + ((puck.t - tMin) / winT) * (gr - gl);
+    var ly = gb - (Math.min(puck.v, vMax) / vMax) * (gb - gt);
+    ctx.beginPath();
+    ctx.arc(lx, ly, 3.4, 0, Math.PI * 2);
+    ctx.fillStyle = P.accent;
+    ctx.fill();
+  }
+
+  function puckTick(ts) {
+    if (!puck.running) return;
+    if (!puck.last) puck.last = ts;
+    var dt = Math.min((ts - puck.last) / 1000, 0.05);
+    puck.last = ts;
+    puck.t += dt;
+    if (puck.mu > 0) {
+      puck.v = Math.max(0, puck.v - puck.mu * G * dt);
+    }
+    puck.s += puck.v * dt;
+    puck.samples.push({ t: puck.t, v: puck.v });
+    if (puck.samples.length > 4000) puck.samples.splice(0, 2000);
+    if (puck.v <= 0.0001 && puck.mu > 0) {
+      puck.v = 0;
+      puck.running = false;
+      puck.atRest = true;
+      setText(puckStartBtn, "Start");
+    }
+    puckReadouts();
+    drawPuck();
+    if (puck.running) puck.raf = requestAnimationFrame(puckTick);
+  }
+
+  function resetPuck(draw) {
+    puck.s = 0;
+    puck.v = V0;
+    puck.t = 0;
+    puck.last = 0;
+    puck.atRest = false;
+    puck.running = false;
+    puck.samples = [{ t: 0, v: V0 }];
+    if (puck.raf) { cancelAnimationFrame(puck.raf); puck.raf = 0; }
+    setText(puckStartBtn, "Start");
+    puckReadouts();
+    if (draw !== false) drawPuck();
+  }
+
+  muInput.addEventListener("input", function () {
+    puck.mu = parseFloat(muInput.value);
+    setText(muVal, puck.mu.toFixed(2));
+    puckReadouts();
+    drawPuck();
+  });
+
+  puckStartBtn.addEventListener("click", function () {
+    if (puck.running) {
+      puck.running = false;
+      if (puck.raf) { cancelAnimationFrame(puck.raf); puck.raf = 0; }
+      setText(puckStartBtn, "Start");
+      return;
+    }
+    if (puck.atRest) resetPuck(false);
+    puck.running = true;
+    puck.last = 0;
+    setText(puckStartBtn, "Pause");
+    puck.raf = requestAnimationFrame(puckTick);
+  });
+
+  puckResetBtn.addEventListener("click", function () {
+    if (puck.raf) { cancelAnimationFrame(puck.raf); puck.raf = 0; }
+    resetPuck(true);
+  });
+
+  /* ================= PLATE II : Galileo's ramps ================= */
+  var H_REL = 1.0;
+  var ALPHA = 50 * Math.PI / 180;
+  var X1 = H_REL / Math.tan(ALPHA);
+  var FLAT = 0.35;
+  var X2 = X1 + FLAT;
+  var L1 = H_REL / Math.sin(ALPHA);
+  var TIME_SCALE = 0.55;
+
+  var ramp = { theta: 45, s: 0.03, running: false, started: false, reached: false, last: 0, raf: 0 };
+  var rampC = null;
+
+  var thetaInput = document.getElementById("theta");
+  var thetaVal = document.getElementById("thetaVal");
+  var thetaOut = document.getElementById("thetaOut");
+  var dOut = document.getElementById("dOut");
+  var distOut = document.getElementById("distOut");
+  var rampNote = document.getElementById("rampNote");
+  var rampBtn = document.getElementById("rampRun");
+  var rampResetBtn = document.getElementById("rampReset");
+
+  function pathAt(s) {
+    if (s <= L1) {
+      return { x: s * Math.cos(ALPHA), y: H_REL - s * Math.sin(ALPHA), u: 0, onUp: false };
+    }
+    var s2 = s - L1;
+    if (s2 <= FLAT) {
+      return { x: X1 + s2, y: 0, u: 0, onUp: false };
+    }
+    var u = s2 - FLAT;
+    var th = ramp.theta * Math.PI / 180;
+    return { x: X2 + u * Math.cos(th), y: u * Math.sin(th), u: u, onUp: true };
+  }
+
+  function updateRampReadouts() {
+    setText(thetaOut, ramp.theta + "°");
+    if (ramp.theta < 0.5) {
+      setText(dOut, "∞");
+    } else {
+      setText(dOut, (H_REL / Math.sin(ramp.theta * Math.PI / 180)).toFixed(2) + " m");
+    }
+    var p = pathAt(ramp.s);
+    setText(distOut, (p.onUp ? p.u : 0).toFixed(2) + " m");
+
+    if (ramp.theta < 0.5) {
+      if (ramp.running) {
+        setText(rampNote, "Flat second ramp. The ball has nothing left to climb, so it keeps its speed of 4.43 m/s and its distance from the bottom keeps growing.");
+      } else {
+        setText(rampNote, "θ = 0: the second ramp lies flat. The ball never stops and d is infinite.");
+      }
+    } else if (ramp.reached) {
+      setText(rampNote, "The ball reached height h and stopped for an instant. Every release returns it to exactly the height it started from.");
+    } else if (ramp.running) {
+      setText(rampNote, "The ball trades height for speed on the way down and speed for height on the way up.");
+    } else {
+      setText(rampNote, "Press Release ball. With the ramp at " + ramp.theta + "° the ball must travel " + (H_REL / Math.sin(ramp.theta * Math.PI / 180)).toFixed(2) + " m up the second ramp to reach height h.");
+    }
+  }
+
+  function drawRamps() {
+    var o = rampC;
+    if (!o || !o.w) return;
+    var ctx = o.ctx, w = o.w, h = o.h;
+    var P = pal();
+    ctx.clearRect(0, 0, w, h);
+
+    var scale = Math.min(70, Math.max(44, w / 6.4));
+    var floorY = h - 44;
+    var viewW = w / scale;
+    var bp = pathAt(ramp.s);
+    var camX = Math.max(0, bp.x - 0.62 * viewW);
+    var th = ramp.theta * Math.PI / 180;
+
+    function X(x) { return 10 + (x - camX) * scale; }
+    function Y(y) { return floorY - y * scale; }
+
+    ctx.strokeStyle = P.strong;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, floorY);
+    ctx.lineTo(w, floorY);
+    ctx.stroke();
+
+    ctx.save();
+    ctx.setLineDash([5, 4]);
+    ctx.strokeStyle = P.signal;
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(0, Y(H_REL) + 0.5);
+    ctx.lineTo(w, Y(H_REL) + 0.5);
+    ctx.stroke();
+    ctx.restore();
+    txt(ctx, "height h", w - 6, Y(H_REL) - 6, P.signal, "right", 10);
+
+    ctx.strokeStyle = P.ink;
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.beginPath();
+    ctx.moveTo(X(0), Y(H_REL));
+    ctx.lineTo(X(X1), Y(0));
+    ctx.lineTo(X(X2), Y(0));
+    ctx.stroke();
+
+    var endU;
+    if (th < 1e-4) {
+      endU = (camX + viewW + 1 - X2);
+    } else {
+      endU = Math.min(1.15 * H_REL / Math.sin(th), (camX + viewW + 1 - X2) / Math.cos(th));
+    }
+    if (endU > 0) {
+      ctx.beginPath();
+      ctx.moveTo(X(X2), Y(0));
+      ctx.lineTo(X(X2 + endU * Math.cos(th)), Y(endU * Math.sin(th)));
+      ctx.stroke();
+    }
+
+    if (ramp.theta >= 6) {
+      var r = Math.min(28, 0.55 * scale);
+      ctx.beginPath();
+      ctx.arc(X(X2), Y(0), r, -th, 0);
+      ctx.strokeStyle = P.muted;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      txt(ctx, "θ", X(X2) + r + 5, Y(0) - 7, P.muted, "left", 11);
+    }
+
+    if (ramp.theta >= 1) {
+      var d = H_REL / Math.sin(th);
+      var gx = X(X2 + d * Math.cos(th));
+      if (gx > -12 && gx < w + 12) {
+        ctx.beginPath();
+        ctx.arc(gx, Y(H_REL), 5, 0, Math.PI * 2);
+        ctx.setLineDash([3, 3]);
+        ctx.strokeStyle = P.muted;
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+
+    var p1 = pathAt(Math.max(0, ramp.s - 0.04));
+    var p2 = pathAt(ramp.s + 0.04);
+    var tx = X(p2.x) - X(p1.x);
+    var ty = Y(p2.y) - Y(p1.y);
+    var tl = Math.hypot(tx, ty) || 1;
+    tx /= tl; ty /= tl;
+    var nx = ty, ny = -tx;
+    if (ny > 0) { nx = -nx; ny = -ny; }
+
+    var R = 7;
+    var bcx = X(bp.x) + nx * R;
+    var bcy = Y(bp.y) + ny * R;
+    ctx.beginPath();
+    ctx.arc(bcx, bcy, R, 0, Math.PI * 2);
+    ctx.fillStyle = P.signal;
+    ctx.fill();
+    ctx.strokeStyle = P.ink;
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+  }
+
+  function rampTick(ts) {
+    if (!ramp.running) return;
+    if (!ramp.last) ramp.last = ts;
+    var dt = Math.min((ts - ramp.last) / 1000, 0.05);
+    ramp.last = ts;
+
+    var p = pathAt(ramp.s);
+    var v = Math.sqrt(Math.max(0, 2 * G * (H_REL - p.y)));
+    var ns = ramp.s + v * dt * TIME_SCALE;
+
+    if (ramp.theta > 0.5) {
+      var sTurn = L1 + FLAT + H_REL / Math.sin(ramp.theta * Math.PI / 180);
+      if (ns >= sTurn - 0.004) {
+        ns = sTurn;
+        ramp.running = false;
+        ramp.reached = true;
+        setText(rampBtn, "Release ball");
+      }
+    }
+    ramp.s = ns;
+    updateRampReadouts();
+    drawRamps();
+    if (ramp.running) ramp.raf = requestAnimationFrame(rampTick);
+  }
+
+  function resetRamp() {
+    if (ramp.raf) { cancelAnimationFrame(ramp.raf); ramp.raf = 0; }
+    ramp.s = 0.03;
+    ramp.running = false;
+    ramp.started = false;
+    ramp.reached = false;
+    ramp.last = 0;
+    setText(rampBtn, "Release ball");
+    updateRampReadouts();
+    drawRamps();
+  }
+
+  thetaInput.addEventListener("input", function () {
+    ramp.theta = parseInt(thetaInput.value, 10);
+    setText(thetaVal, ramp.theta + "°");
+    resetRamp();
+  });
+
+  rampBtn.addEventListener("click", function () {
+    if (ramp.running) {
+      ramp.running = false;
+      if (ramp.raf) { cancelAnimationFrame(ramp.raf); ramp.raf = 0; }
+      setText(rampBtn, "Release ball");
+      updateRampReadouts();
+      return;
+    }
+    if (!ramp.started || ramp.reached) {
+      ramp.s = 0.03;
+      ramp.reached = false;
+      ramp.started = true;
+    }
+    ramp.running = true;
+    ramp.last = 0;
+    setText(rampBtn, "Pause");
+    ramp.raf = requestAnimationFrame(rampTick);
+  });
+
+  rampResetBtn.addEventListener("click", resetRamp);
+
+  /* ================= PLATE III : which frame? ================= */
+  var V_BUS = 4.0;                 /* m/s at t = 0                */
+  var A_BUS = 5.0;                 /* m/s^2 while braking         */
+  var T_STOP = V_BUS / A_BUS;      /* 0.80 s                      */
+  var BUS_L = 4.6;                 /* interior length, m          */
+  var BALL_R_M = 0.14;             /* ball radius in metres       */
+  var BALL_X0 = 1.0;               /* ball ground x at t = 0      */
+  var WALL_REL = BUS_L - BALL_R_M; /* 4.46 m from the bus rear    */
+  var SLOWMO = 0.25;               /* playback rate               */
+
+  function busXAt(t) {
+    var tb = Math.min(t, T_STOP);
+    return V_BUS * tb - 0.5 * A_BUS * tb * tb;
+  }
+  function busVAt(t) {
+    return Math.max(0, V_BUS - A_BUS * t);
+  }
+  /* time at which the sliding ball reaches the front wall */
+  var T_CONTACT = (WALL_REL + busXAt(T_STOP) - BALL_X0) / V_BUS; /* 1.265 s */
+
+  function frameState(t) {
+    var xb = busXAt(t);
+    var vb = busVAt(t);
+    var contact = t >= T_CONTACT - 1e-9;
+    var xBall = contact ? xb + WALL_REL : BALL_X0 + V_BUS * t;
+    var vBall = contact ? 0 : V_BUS;
+    return {
+      xb: xb, vb: vb, xBall: xBall, vBall: vBall, contact: contact,
+      vRel: contact ? 0 : (V_BUS - vb)
+    };
+  }
+
+  var frameSim = { t: 0, running: false, view: "street", last: 0, raf: 0 };
+  var frameC = null;
+
+  var frameNote = document.getElementById("frameNote");
+  var frameBtn = document.getElementById("frameRun");
+  var frameResetBtn = document.getElementById("frameReset");
+  var busSpeedOut = document.getElementById("busSpeedOut");
+  var ballSpeedOut = document.getElementById("ballSpeedOut");
+  var ballForceOut = document.getElementById("ballForceOut");
+
+  function frameReadouts() {
+    var st = frameState(frameSim.t);
+    setText(busSpeedOut, st.vb.toFixed(1) + " m/s");
+    setText(ballSpeedOut, st.vBall.toFixed(1) + " m/s");
+    setText(ballForceOut, "0 N");
+  }
+
+  function drawFrameSim() {
+    var o = frameC;
+    if (!o || !o.w) return;
+    var ctx = o.ctx, w = o.w, h = o.h;
+    var P = pal();
+    ctx.clearRect(0, 0, w, h);
+
+    var st = frameState(frameSim.t);
+    var scale = Math.min(56, Math.max(30, w / 9.6));
+    var groundY = h - 30;
+    var bodyBottom = groundY - 12;
+    var bodyH = Math.min(2.0 * scale, Math.max(46, bodyBottom - 74));
+    var bodyTop = bodyBottom - bodyH;
+    var br = Math.max(5, Math.min(9, BALL_R_M * scale));
+    var offset = frameSim.view === "street" ? 0 : st.xb;
+
+    function S(x) { return 12 + (x - offset) * scale; }
+
+    ctx.strokeStyle = P.strong;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, groundY);
+    ctx.lineTo(w, groundY);
+    ctx.stroke();
+
+    ctx.strokeStyle = P.rule;
+    ctx.lineWidth = 3;
+    ctx.lineCap = "butt";
+    var firstM = Math.floor((offset - 2) / 2) * 2;
+    for (var m = firstM; m < offset + w / scale + 2; m += 2) {
+      var dx = S(m);
+      if (dx < -20 || dx > w + 20) continue;
+      ctx.beginPath();
+      ctx.moveTo(dx, groundY + 9);
+      ctx.lineTo(dx + 9, groundY + 9);
+      ctx.stroke();
+    }
+
+    var bx0 = S(st.xb);
+    var bx1 = S(st.xb + BUS_L);
+    ctx.fillStyle = P.panel;
+    ctx.strokeStyle = P.ink;
+    ctx.lineWidth = 1.5;
+    roundRectPath(ctx, bx0, bodyTop, bx1 - bx0, bodyH, 5);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = P.rule;
+    var winH = Math.min(16, bodyH * 0.2);
+    var ww = (bx1 - bx0) * 0.26;
+    ctx.fillRect(bx0 + (bx1 - bx0) * 0.07, bodyTop + 7, ww, winH);
+    ctx.fillRect(bx0 + (bx1 - bx0) * 0.40, bodyTop + 7, ww, winH);
+    ctx.fillRect(bx0 + (bx1 - bx0) * 0.73, bodyTop + 7, ww, winH);
+
+    ctx.strokeStyle = P.rule;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(bx0 + 3, bodyBottom);
+    ctx.lineTo(bx1 - 3, bodyBottom);
+    ctx.stroke();
+
+    var wr = Math.max(5, Math.min(9, scale * 0.16));
+    ctx.fillStyle = P.ink;
+    ctx.beginPath();
+    ctx.arc(bx0 + (bx1 - bx0) * 0.17, groundY - wr, wr, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(bx1 - (bx1 - bx0) * 0.17, groundY - wr, wr, 0, Math.PI * 2);
+    ctx.fill();
+
+    /* the ball rests against the inside of the front wall,
+       so its centre never passes bx1 - br - 1 at any width */
+    var bxp = S(st.xBall);
+    var bxpMax = bx1 - br - 1;
+    if (bxp > bxpMax) bxp = bxpMax;
+    var byp = bodyBottom - br;
+    ctx.beginPath();
+    ctx.arc(bxp, byp, br, 0, Math.PI * 2);
+    ctx.fillStyle = P.signal;
+    ctx.fill();
+    ctx.strokeStyle = P.ink;
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    var AS = 9;
+    var abx = bx0 + 8, aby = bodyTop - 15;
+    arrow(ctx, abx, aby, abx + st.vb * AS, aby, P.accent, 2, 7);
+    var busLabel = "bus " + st.vb.toFixed(1) + " m/s" + (frameSim.view === "bus" ? " (ground)" : "");
+    labelClamped(ctx, busLabel, abx + st.vb * AS * 0.5, aby - 7, P.accent, w);
+
+    var vArrow = frameSim.view === "street" ? st.vBall : st.vRel;
+    var bax = bxp - 12, bay = byp - br - 12;
+    arrow(ctx, bax, bay, bax + vArrow * AS, bay, P.signal, 2, 7);
+    var btext = frameSim.view === "street"
+      ? ("ball " + st.vBall.toFixed(1) + " m/s")
+      : ("ball " + st.vRel.toFixed(1) + " m/s rel. bus");
+    labelClamped(ctx, btext, bax + vArrow * AS * 0.5, bay - 7, P.signal, w);
+
+    var caption;
+    if (frameSim.view === "street") {
+      caption = "GROUND FRAME";
+    } else if (frameSim.t >= T_STOP - 1e-9) {
+      caption = "BUS FRAME (AT REST, INERTIAL AGAIN)";
+    } else {
+      caption = "BUS FRAME (ACCELERATING)";
+    }
+    txt(ctx, caption, 10, 16, P.muted, "left", 9.5);
+    txt(ctx, "net force on ball = 0", 10, groundY + 24, P.accent, "left", 9.5);
+  }
+
+  function frameTick(ts) {
+    if (!frameSim.running) return;
+    if (!frameSim.last) frameSim.last = ts;
+    var dt = Math.min((ts - frameSim.last) / 1000, 0.05);
+    frameSim.last = ts;
+    frameSim.t = Math.min(T_CONTACT, frameSim.t + dt * SLOWMO);
+    frameReadouts();
+    frameNoteForView();
+    drawFrameSim();
+    if (frameSim.t >= T_CONTACT - 1e-9) {
+      frameSim.running = false;
+      setText(frameBtn, "Run braking");
+      frameEndNote();
+      return;
+    }
+    frameSim.raf = requestAnimationFrame(frameTick);
+  }
+
+  function frameEndNote() {
+    if (frameSim.view === "street") {
+      setText(frameNote, "The bus has stopped. The ball slid on at 4.0 m/s and ran into the front wall, and the wall is the first thing to push it horizontally. That push is what finally changes the ball's velocity from 4.0 m/s to zero.");
+    } else {
+      setText(frameNote, "The bus has stopped. While the bus braked, the ball accelerated forward across the floor with no force acting on it, which shows that the braking bus was not an inertial frame. Once the bus came to rest the frame became inertial again, and the ball coasted at a constant 4.0 m/s relative to the floor until the front wall stopped it.");
+    }
+  }
+
+  function frameNoteForView() {
+    if (frameSim.t >= T_CONTACT - 1e-9) { frameEndNote(); return; }
+    if (frameSim.view === "street") {
+      setText(frameNote, "Ground frame: the ball keeps a constant velocity of 4.0 m/s while the bus slows. Net force on the ball is zero, so its motion stays uniform. The first law holds here.");
+    } else if (frameSim.t >= T_STOP - 1e-9) {
+      setText(frameNote, "Bus frame: the bus has stopped, so this frame is inertial again. The ball now coasts at a constant 4.0 m/s relative to the floor, which is what the first law predicts for zero net force.");
+    } else {
+      setText(frameNote, "Bus frame: the bus brakes at 5.0 m/s², and the ball accelerates forward across the floor with no force acting on it. A braking bus is not an inertial frame, so the first law fails in it.");
+    }
+  }
+
+  function resetFrame() {
+    if (frameSim.raf) { cancelAnimationFrame(frameSim.raf); frameSim.raf = 0; }
+    frameSim.t = 0;
+    frameSim.running = false;
+    frameSim.last = 0;
+    setText(frameBtn, "Run braking");
+    frameReadouts();
+    frameNoteForView();
+    drawFrameSim();
+  }
+
+  document.querySelectorAll('input[name="frameView"]').forEach(function (r) {
+    r.addEventListener("change", function () {
+      var checked = document.querySelector('input[name="frameView"]:checked');
+      frameSim.view = checked ? checked.value : "street";
+      frameNoteForView();
+      drawFrameSim();
+    });
+  });
+
+  frameBtn.addEventListener("click", function () {
+    if (frameSim.running) {
+      frameSim.running = false;
+      if (frameSim.raf) { cancelAnimationFrame(frameSim.raf); frameSim.raf = 0; }
+      setText(frameBtn, "Run braking");
+      frameNoteForView();
+      return;
+    }
+    if (frameSim.t >= T_CONTACT - 1e-9) {
+      frameSim.t = 0;
+      frameReadouts();
+      frameNoteForView();
+    }
+    frameSim.running = true;
+    frameSim.last = 0;
+    setText(frameBtn, "Pause");
+    frameSim.raf = requestAnimationFrame(frameTick);
+  });
+
+  frameResetBtn.addEventListener("click", resetFrame);
+
+  /* ================= boot ================= */
+  puckC = reg("puckCanvas", drawPuck);
+  rampC = reg("rampCanvas", drawRamps);
+  frameC = reg("frameCanvas", drawFrameSim);
+
+  puckReadouts();
+  updateRampReadouts();
+  frameReadouts();
+  frameNoteForView();
+
+  resizeAll();
+
+  window.addEventListener("resize", resizeAll);
+  window.addEventListener("orientationchange", function () {
+    setTimeout(resizeAll, 120);
+  });
+
+  if (window.matchMedia) {
+    var mqd = window.matchMedia("(prefers-color-scheme: dark)");
+    if (mqd.addEventListener) {
+      mqd.addEventListener("change", resizeAll);
+    } else if (mqd.addListener) {
+      mqd.addListener(resizeAll);
+    }
+  }
+  if (window.MutationObserver) {
+    new MutationObserver(function () { resizeAll(); }).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme", "class", "style"]
+    });
+  }
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(resizeAll);
+  }
+  if (reduceMotion) {
+    /* all simulations start paused; nothing animates until the reader asks */
+    setText(puckStartBtn, "Start");
+    setText(rampBtn, "Release ball");
+    setText(frameBtn, "Run braking");
+  }
+})();
+</script>
